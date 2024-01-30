@@ -30,18 +30,20 @@ function Sec1 () {
 function Sec2() {
     return (
         <section className="flex justify-center items-center border border-black w-[100%] pt-[50px]">
-            <div className="flex flex-row flex-wrap border border-black w-[900px]">
-                <div className="flex flex-col w-[400px] h-[460px] gap-y-[10px]">
-                    <div className="bg-[url('/public/sec2-img.jpeg')] bg-contain bg-no-repeat w-[400px] h-[400px] border border-black"></div>
-                    <div className="w-[400px] h-[50px] flex flex-row">
-                        <div className="pl-[20px] w-[340px] flex justify-start items-center border border-black">
-                            <p className="text-[17px] font-semibold">Wool X Buffer Jacket</p>
-                        </div>
-                        <div className="w-[60px] flex items-center border border-black justify-center">
-                            <p className="font-semibold">$100</p>
+            <div className="flex flex-row flex-wrap border border-black w-[850px] gap-x-[48px] gap-y-[48px]">
+                {new_arrival.map((arrival) =>(
+                    <div className="flex flex-col w-[400px] h-[460px] gap-y-[10px]">
+                        <div style={{background: `url(${arrival.img})`}} className=" bg-contain bg-no-repeat w-[400px] h-[400px] border border-black"></div>
+                        <div className="w-[400px] h-[50px] flex flex-row">
+                            <div className="pl-[20px] w-[340px] flex justify-start items-center border border-black">
+                                <p className="text-[17px] font-semibold">{arrival.product}</p>
+                            </div>
+                            <div className="w-[60px] flex items-center border border-black justify-center">
+                                <p className="font-semibold">{arrival.price}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ))}
             </div>
         </section>
     )

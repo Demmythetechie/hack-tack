@@ -1,5 +1,5 @@
 import {filters, prices, menProduct} from "./str";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 
 function Men(){
@@ -36,6 +36,8 @@ function Sec2() {
     // Initialize state for dropdown visibility
     const [dropdownVisibility, setDropdownVisibility] = useState([false, false, false]);
     const [binary, setBinary] = useState(null);
+    const [view, setView] = useState(null);
+    const switchh = useRef(null);
 
      // Toggle dropdown visibility
     function toggleDropdown(index) {
@@ -106,20 +108,94 @@ function Sec2() {
                 </div>
             </div>
             <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px]">
-                {menProduct.map((prd) => (
-                    <div className="flex flex-col justify-between h-[300px] w-[30%]">
-                        <div className={`w-[100%] h-[260px] border border-black bg-cover bg-no-repeat bg-[top-center] ${prd.Mainslide}`}></div>
-                        <div className="w-[100%] h-[35px] flex flex-row justify-between">
-                            <div className="flex items-center w-[85%] h-[35px] border border-black pl-[20px]">
-                                <p className="text-[0.8rem] font-semibold">{prd.name}</p>
-                            </div>
-                            <div className="flex items-center justify-center w-[15%] h-[35px] border-t border-b border-r border-black">
-                                <p className="text-[0.8rem] font-semibold">{prd.price}</p>
-                            </div>
-                        </div>
-                    </div>
+                {menProduct.map((prd, index) => (
+                    <>
+                        {(index === 0) ? <></> : <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>}
+                        {(switchh.current === index) && (index !== 0) ? <Fullview/> : <></>}
+                    </>
                 ))}
             </div>
+        </section>
+    )
+}
+
+function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide, color, size, switchh}) {
+    function fullview () {
+        console.log(ind);
+        setView({mainslide, name, price, setView, sideslide, backslide, color, size})
+        switchh.current = ind;
+        console.log(switchh);
+        if (switchh.current % 3 !== 0) {
+            switchh.current++;
+            console.log(switchh);
+        }
+
+        if (switchh.current % 3 !== 0) {
+            switchh.current++;
+            console.log(switchh);
+        }
+    }
+
+    return (
+        <div className="flex flex-col justify-between h-[300px] w-[30%]" onClick={fullview}>
+            <div className={`w-[100%] h-[260px] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
+            <div className="w-[100%] h-[35px] flex flex-row justify-between">
+                <div className="flex items-center w-[85%] h-[35px] border border-black pl-[20px]">
+                    <p className="text-[0.8rem] font-semibold">{name}</p>
+                </div>
+                <div className="flex items-center justify-center w-[15%] h-[35px] border-t border-b border-r border-black">
+                    <p className="text-[0.8rem] font-semibold">{price}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function Fullview () {
+    return (
+        <section className="h-fit w-[94%] flex flex-row items-center gap-x-[35px] pl-[20px]">
+            <div className="h-[300px] w-[310px] justify-center flex flex-col gap-y-[30px]">
+                <svg width="310" height="300" className="absolute">
+                    <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
+                    <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
+                </svg>
+                <div className="w-[230px] flex flex-row gap-x-[55px] items-center pl-[20px]">
+                    <p className="font-semibold text-[16px]">Wool X Buffer Jacket</p>
+                    <p className="font-semibold text-[16px]">$100.00</p>
+                </div>
+                <div className="flex flex-col w-[270px] pl-[20px]">
+                    <p className="text-[15px] font-semibold">Color</p>
+                    <svg width="270" height="10">
+                        <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+                    </svg>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
+                        <button className="w-[35px] h-[15px] border-2 border-black"></button>
+                    </div>
+                </div>
+                <div className="flex flex-col w-[270px] pl-[20px]">
+                    <p className="text-[15px] font-semibold">Size</p>
+                    <svg width="270" height="10">
+                        <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+                    </svg>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
+                        <button className="w-[35px] h-[15px] border-2 border-black"></button>
+                    </div>
+                </div>
+                <div className="flex flex-row w-[270px] justify-between items-center pl-[20px]">
+                    <div className="flex flex-row items-center justify-between w-[70px] h-[30px] border border-black pl-[5px] pr-[5px]">
+                        <button className="text-[20px] pb-[3px]">-</button>
+                        <p className="text-[15px]">2</p>
+                        <button className="text-[20px] pb-[3px]">+</button>
+                    </div>
+                    <button className="w-[170px] h-[30px] text-white bg-black text-[13px]">Add to Cart</button>
+                </div>
+            </div>
+            <div className="w-[300px] h-[300px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+            <section className="h-[300px] flex flex-col justify-between">
+                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+            </section>
         </section>
     )
 }
@@ -127,48 +203,48 @@ function Sec2() {
 export default Men;
 
 /*
-                <section className="h-fit w-[94%] flex flex-row items-center gap-x-[35px] pl-[20px]">
-                    <div className="h-[300px] w-[310px] justify-center flex flex-col gap-y-[30px]">
-                        <svg width="310" height="300" className="absolute">
-                            <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
-                            <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
-                        </svg>
-                        <div className="w-[230px] flex flex-row gap-x-[55px] items-center pl-[20px]">
-                            <p className="font-semibold text-[16px]">Wool X Buffer Jacket</p>
-                            <p className="font-semibold text-[16px]">$100.00</p>
-                        </div>
-                        <div className="flex flex-col w-[270px] pl-[20px]">
-                            <p className="text-[15px] font-semibold">Color</p>
-                            <svg width="270" height="10">
-                                <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
-                            </svg>
-                            <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
-                                <button className="w-[35px] h-[15px] border-2 border-black"></button>
-                            </div>
-                        </div>
-                        <div className="flex flex-col w-[270px] pl-[20px]">
-                            <p className="text-[15px] font-semibold">Size</p>
-                            <svg width="270" height="10">
-                                <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
-                            </svg>
-                            <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
-                                <button className="w-[35px] h-[15px] border-2 border-black"></button>
-                            </div>
-                        </div>
-                        <div className="flex flex-row w-[270px] justify-between items-center pl-[20px]">
-                            <div className="flex flex-row items-center justify-between w-[70px] h-[30px] border border-black pl-[5px] pr-[5px]">
-                                <button className="text-[20px] pb-[3px]">-</button>
-                                <p className="text-[15px]">2</p>
-                                <button className="text-[20px] pb-[3px]">+</button>
-                            </div>
-                            <button className="w-[170px] h-[30px] text-white bg-black text-[13px]">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div className="w-[300px] h-[300px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                    <section className="h-[300px] flex flex-col justify-between">
-                        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                    </section>
-                </section>
+<section className="h-fit w-[94%] flex flex-row items-center gap-x-[35px] pl-[20px]">
+    <div className="h-[300px] w-[310px] justify-center flex flex-col gap-y-[30px]">
+        <svg width="310" height="300" className="absolute">
+            <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
+            <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
+        </svg>
+        <div className="w-[230px] flex flex-row gap-x-[55px] items-center pl-[20px]">
+            <p className="font-semibold text-[16px]">Wool X Buffer Jacket</p>
+            <p className="font-semibold text-[16px]">$100.00</p>
+        </div>
+        <div className="flex flex-col w-[270px] pl-[20px]">
+            <p className="text-[15px] font-semibold">Color</p>
+            <svg width="270" height="10">
+                <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+            </svg>
+            <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
+                <button className="w-[35px] h-[15px] border-2 border-black"></button>
+            </div>
+        </div>
+        <div className="flex flex-col w-[270px] pl-[20px]">
+            <p className="text-[15px] font-semibold">Size</p>
+            <svg width="270" height="10">
+                <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+            </svg>
+            <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
+                <button className="w-[35px] h-[15px] border-2 border-black"></button>
+            </div>
+        </div>
+        <div className="flex flex-row w-[270px] justify-between items-center pl-[20px]">
+            <div className="flex flex-row items-center justify-between w-[70px] h-[30px] border border-black pl-[5px] pr-[5px]">
+                <button className="text-[20px] pb-[3px]">-</button>
+                <p className="text-[15px]">2</p>
+                <button className="text-[20px] pb-[3px]">+</button>
+            </div>
+            <button className="w-[170px] h-[30px] text-white bg-black text-[13px]">Add to Cart</button>
+        </div>
+    </div>
+    <div className="w-[300px] h-[300px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+    <section className="h-[300px] flex flex-col justify-between">
+        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+        <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+    </section>
+</section>
 */

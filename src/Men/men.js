@@ -107,11 +107,11 @@ function Sec2() {
                     </form>
                 </div>
             </div>
-            <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px]">
+            <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px] border border-black">
                 {menProduct.map((prd, index) => (
                     <>
                         {(index === 0) ? <></> : <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>}
-                        {(switchh.current === index) && (index !== 0) ? <Fullview/> : <></>}
+                        {(switchh.current === index) && (index !== 0) ? <Fullview view={view}/> : <></>}
                     </>
                 ))}
             </div>
@@ -122,7 +122,7 @@ function Sec2() {
 function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide, color, size, switchh}) {
     function fullview () {
         console.log(ind);
-        setView({mainslide, name, price, setView, sideslide, backslide, color, size})
+        setView({mainslide, name, price, sideslide, backslide, color, size})
         switchh.current = ind;
         console.log(switchh);
         if (switchh.current % 3 !== 0) {
@@ -137,9 +137,9 @@ function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide
     }
 
     return (
-        <div className="flex flex-col justify-between h-[300px] w-[30%]" onClick={fullview}>
-            <div className={`w-[100%] h-[260px] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
-            <div className="w-[100%] h-[35px] flex flex-row justify-between">
+        <div className="flex flex-col justify-between w-[30%] aspect-[1/1.1]" onClick={fullview}>
+            <div className={`w-[100%] aspect-[1/0.9] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
+            <div className="w-[100%] aspect-[1/0.1] flex flex-row justify-between">
                 <div className="flex items-center w-[85%] h-[35px] border border-black pl-[20px]">
                     <p className="text-[0.8rem] font-semibold">{name}</p>
                 </div>
@@ -151,50 +151,54 @@ function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide
     )
 }
 
-function Fullview () {
+function Fullview (props) {
     return (
-        <section className="h-fit w-[94%] flex flex-row items-center gap-x-[35px] pl-[20px]">
-            <div className="h-[300px] w-[310px] justify-center flex flex-col gap-y-[30px]">
-                <svg width="310" height="300" className="absolute">
+        <section className="h-fit w-[94%] flex flex-row items-center gap-x-[7%] pl-[20px]">
+            <div className="relative w-[35%] aspect-[1/0.97] justify-center flex flex-col gap-y-[8%]">
+                <svg viewBox="0 0 310 300" className="aspect-[1/1] absolute">
                     <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
                     <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
                 </svg>
-                <div className="w-[230px] flex flex-row gap-x-[55px] items-center pl-[20px]">
-                    <p className="font-semibold text-[16px]">Wool X Buffer Jacket</p>
-                    <p className="font-semibold text-[16px]">$100.00</p>
+                <div className="w-[90%] flex flex-row gap-x-[55px] items-center pl-[20px] ">
+                    <p className="font-semibold text-[1.3vw]">{props.view.name}</p>
+                    <p className="font-semibold text-[1.3vw]">{props.view.price}</p>
                 </div>
-                <div className="flex flex-col w-[270px] pl-[20px]">
-                    <p className="text-[15px] font-semibold">Color</p>
-                    <svg width="270" height="10">
+                <div className="flex flex-col w-[95%] aspect-[1/0.1] pl-[20px]">
+                    <p className="text-[1.3vw] font-semibold">Color</p>
+                    <svg viewBox="0 0 270 10">
                         <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
                     </svg>
-                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
-                        <button className="w-[35px] h-[15px] border-2 border-black"></button>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%]">
+                        {props.view.color.map((color)=> (
+                            <button className={` w-[15%] aspect-[1/0.4] border-2 border-black ${color}`}></button>
+                        ))}
                     </div>
                 </div>
-                <div className="flex flex-col w-[270px] pl-[20px]">
-                    <p className="text-[15px] font-semibold">Size</p>
-                    <svg width="270" height="10">
+                <div className="flex flex-col w-[95%] aspect-[1/0.1] pl-[20px]">
+                    <p className="text-[1.3vw] font-semibold">Size</p>
+                    <svg viewBox="0 0 270 10">
                         <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
                     </svg>
-                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[270px]">
-                        <button className="w-[35px] h-[15px] border-2 border-black"></button>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%]">
+                        {props.view.size.map((size)=> (
+                            <button className="flex justify-center items-center w-[10%] aspect-[1/1] border border-black text-[1.3vw]">{size}</button>
+                        ))}
                     </div>
                 </div>
-                <div className="flex flex-row w-[270px] justify-between items-center pl-[20px]">
-                    <div className="flex flex-row items-center justify-between w-[70px] h-[30px] border border-black pl-[5px] pr-[5px]">
-                        <button className="text-[20px] pb-[3px]">-</button>
-                        <p className="text-[15px]">2</p>
-                        <button className="text-[20px] pb-[3px]">+</button>
+                <div className="flex flex-row w-[95%] aspect-[1/0.1] justify-between items-center pl-[20px]">
+                    <div className="flex flex-row items-center justify-between w-[27%] h-[100%] border border-black pl-[5px] pr-[5px]">
+                        <button className="text-[1vw]">-</button>
+                        <p className="text-[1vw]">2</p>
+                        <button className="text-[1vw]">+</button>
                     </div>
-                    <button className="w-[170px] h-[30px] text-white bg-black text-[13px]">Add to Cart</button>
+                    <button className="w-[63%] h-[100%] text-white bg-black border border-black text-[1vw]">Add to Cart</button>
                 </div>
             </div>
-            <div className="w-[300px] h-[300px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-            <section className="h-[300px] flex flex-col justify-between">
-                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
-                <div className="w-[90px] h-[90px] bg-[url('/public/sec2-img.jpeg')] bg-cover bg-no-repeat bg-[top-center] border border-black"></div>
+            <div className={`w-[34%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+            <section className="w-[10.4%] aspect-[1/3.27] flex flex-col justify-between">
+                <div className={`w-[100%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+                <div className={`w-[100%] aspect-[1/1] ${props.view.sideslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+                <div className={`w-[100%] aspect-[1/1] ${props.view.backslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
             </section>
         </section>
     )

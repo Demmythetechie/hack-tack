@@ -107,7 +107,7 @@ function Sec2() {
                     </form>
                 </div>
             </div>
-            <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px] border border-black">
+            <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px] pb-[100px]">
                 {menProduct.map((prd, index) => (
                     <>
                         {(index === 0) ? <></> : <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>}
@@ -138,7 +138,8 @@ function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide
 
     return (
         <div className="flex flex-col justify-between w-[30%] aspect-[1/1.1]" onClick={fullview}>
-            <div className={`w-[100%] aspect-[1/0.9] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
+            <div className={`w-[100%] aspect-[1/1] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
+            <div className="w-[100%] aspect-[1/0.01]"></div>
             <div className="w-[100%] aspect-[1/0.1] flex flex-row justify-between">
                 <div className="flex items-center w-[85%] h-[35px] border border-black pl-[20px]">
                     <p className="text-[0.8rem] font-semibold">{name}</p>

@@ -1,5 +1,5 @@
 import {filters, prices, menProduct} from "./str";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 function Men(){
@@ -20,8 +20,8 @@ function Sec1() {
             <div className="w-[90%] flex flex-row justify-between items-end">
                 <p className=" text-[2.3rem] font-bold">For Men</p>
                 <div className="flex flex-row justify-between items-center h-[30px] w-[120px]">
-                    <p className="text-[1rem] font-semibold">SEE ALL</p>
-                    <svg className="" width="50" height="50">
+                    <p className="max-[530px]:hidden text-[1rem] font-semibold">SEE ALL</p>
+                    <svg className="max-[530px]:hidden" width="50" height="50">
                         <line x1="12" y1="25" x2="40" y2="25" stroke="#000" strokeWidth="2.2" strokeLinecap="round"/>
                         <polyline points="30,18 40,25 30,32" stroke="#000" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -33,11 +33,43 @@ function Sec1() {
 
 function Sec2() {
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    // Responsiveness from Tablet mode to Desktop and vice-versa
+    useEffect(() => {
+        function handleResize() {
+            setWindowWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() =>{
+        if (windowWidth >= 1256 && switchh.current % 3 !== 0) {
+            switchh.current++;
+            if (switchh.current % 3 !== 0) {
+                switchh.current++;
+                setRender(0);
+            }
+
+        } else if (windowWidth <= 1256 && switchh.current % 2 !== 0) {
+            switchh.current--;
+            setRender(1);
+        }
+    }, [windowWidth]);
+    //End
+
+
+
     // Initialize state for dropdown visibility
     const [dropdownVisibility, setDropdownVisibility] = useState([false, false, false]);
     const [binary, setBinary] = useState(null);
     const [view, setView] = useState(null);
     const switchh = useRef(null);
+    const [dummyrender, setRender] = useState(null);
 
      // Toggle dropdown visibility
     function toggleDropdown(index) {
@@ -61,7 +93,7 @@ function Sec2() {
 
     return (
         <section className="w-[100%] flex flex-row">
-            <div className="w-[200px] flex flex-col items-start border-r border-black gap-y-[20px] pl-[30px] pb-[200px]">
+            <div className="max-[885px]:hidden w-[200px] flex flex-col items-start border-r border-black gap-y-[20px] pl-[30px] pb-[200px]">
                 <p className="text-[1.6rem] font-semibold mb-[20px] mt-[20px]">Filter By</p>
                 {filters.map((filter, index)=>(
                     <div className="flex flex-col items-start justify-center w-[150px] gap-y-[10px]">
@@ -107,7 +139,7 @@ function Sec2() {
                     </form>
                 </div>
             </div>
-            <div className="w-[85.4%] h-fit flex flex-row flex-wrap gap-x-[48px] gap-y-[48px] justify-start pl-[50px] pr-[50px] pt-[100px] pb-[100px]">
+            <div className="max-[885px]:w-[100%] w-[85.4%] h-fit flex flex-row items flex-wrap gap-x-[48px] gap-y-[48px] justify-center pl-[50px] pr-[50px] pt-[100px] pb-[100px] max-[530px]:pt-[40px] max-[530px]:pb-[40px] max-[460px]:pr-[30px] max-[460px]:pl-[30px] border border-black">
                 {menProduct.map((prd, index) => (
                     <>
                         {(index === 0) ? <></> : <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>}
@@ -121,23 +153,23 @@ function Sec2() {
 
 function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide, color, size, switchh}) {
     function fullview () {
-        console.log(ind);
         setView({mainslide, name, price, sideslide, backslide, color, size})
         switchh.current = ind;
-        console.log(switchh);
-        if (switchh.current % 3 !== 0) {
+        if (switchh.current % 3 !== 0 && window.innerWidth >= 1256) {
             switchh.current++;
-            console.log(switchh);
         }
 
-        if (switchh.current % 3 !== 0) {
+        if (switchh.current % 3 !== 0 && window.innerWidth >= 1256) {
             switchh.current++;
-            console.log(switchh);
+        }
+
+        if (switchh.current % 2 !== 0 && window.innerWidth <= 1256) {
+            switchh.current++;
         }
     }
 
     return (
-        <div className="flex flex-col justify-between w-[30%] aspect-[1/1.1]" onClick={fullview}>
+        <div className="max-[1256px]:w-[44%] max-[885px]:w-[44%] max-[460px]:w-[100%] max-[530px]:w-[90%] flex flex-col items-center justify-between w-[30%] aspect-[1/1.1]" onClick={fullview}>
             <div className={`w-[100%] aspect-[1/1] border border-black bg-cover bg-no-repeat bg-[top-center] ${mainslide}`}></div>
             <div className="w-[100%] aspect-[1/0.01]"></div>
             <div className="w-[100%] aspect-[1/0.1] flex flex-row justify-between">
@@ -153,9 +185,63 @@ function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide
 }
 
 function Fullview (props) {
+    console.log("re-render");
     return (
         <section className="h-fit w-[94%] flex flex-row items-center gap-x-[7%] pl-[20px]">
-            <div className="relative w-[35%] aspect-[1/0.97] justify-center flex flex-col gap-y-[8%]">
+            <div className="max-[1092px]:w-[50%] relative w-[35%] aspect-[1/0.97] justify-center flex flex-col gap-y-[8%]">
+                <svg viewBox="0 0 310 300" className="aspect-[1/1] absolute">
+                    <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
+                    <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
+                </svg>
+                <div className="w-[90%] flex flex-row gap-x-[55px] items-center pl-[20px] ">
+                    <p className="font-semibold max-[885px]:text-[2vw] text-[1.3vw]">{props.view.name}</p>
+                    <p className="font-semibold max-[885px]:text-[2vw] text-[1.3vw]">{props.view.price}</p>
+                </div>
+                <div className="flex flex-col w-[95%] aspect-[1/0.1] pl-[20px]">
+                    <p className="text-[1.3vw] max-[885px]:text-[2vw] font-semibold">Color</p>
+                    <svg viewBox="0 0 270 10">
+                        <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+                    </svg>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%]">
+                        {props.view.color.map((color)=> (
+                            <button className={` w-[15%] aspect-[1/0.4] border-2 border-black ${color}`}></button>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex flex-col w-[95%] aspect-[1/0.1] pl-[20px]">
+                    <p className="text-[1.3vw] max-[885px]:text-[2vw] font-semibold">Size</p>
+                    <svg viewBox="0 0 270 10">
+                        <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4"/>
+                    </svg>
+                    <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%]">
+                        {props.view.size.map((size)=> (
+                            <button className="flex justify-center items-center w-[10%] aspect-[1/1] border border-black max-[885px]:text-[1.8vw] text-[1.3vw]">{size}</button>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex flex-row w-[95%] aspect-[1/0.1] justify-between items-center pl-[20px]">
+                    <div className="flex flex-row items-center justify-between w-[27%] h-[100%] border border-black pl-[5px] pr-[5px]">
+                        <button className="text-[1vw] max-[885px]:text-[2vw]">-</button>
+                        <p className="text-[1vw] max-[885px]:text-[2vw]">2</p>
+                        <button className="text-[1vw] max-[885px]:text-[2vw]">+</button>
+                    </div>
+                    <button className="w-[63%] h-[100%] text-white bg-black border border-black text-[1vw] max-[885px]:text-[1.8vw]">Add to Cart</button>
+                </div>
+            </div>
+            <div className={`max-[1092px]:w-[48%] w-[34%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+            <section className="max-[1092px]:hidden w-[10.4%] aspect-[1/3.27] flex flex-col justify-between">
+                <div className={`w-[100%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+                <div className={`w-[100%] aspect-[1/1] ${props.view.sideslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+                <div className={`w-[100%] aspect-[1/1] ${props.view.backslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
+            </section>
+        </section>
+    )
+}
+
+function Fullview1256 (props) {
+    return (
+        <section className="h-fit w-[94%] flex flex-row items-center gap-x-[7%] pl-[20px]">
+            <div className="relative w-[50%] aspect-[1/0.97] justify-center flex flex-col gap-y-[8%]">
                 <svg viewBox="0 0 310 300" className="aspect-[1/1] absolute">
                     <polyline points="1,30 1,1 35,1" fill="none" stroke="#000" strokeWidth="2"/>
                     <polyline points="309,265 309,299 275,299" fill="none" stroke="#000" strokeWidth="2"/>
@@ -195,12 +281,7 @@ function Fullview (props) {
                     <button className="w-[63%] h-[100%] text-white bg-black border border-black text-[1vw]">Add to Cart</button>
                 </div>
             </div>
-            <div className={`w-[34%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
-            <section className="w-[10.4%] aspect-[1/3.27] flex flex-col justify-between">
-                <div className={`w-[100%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
-                <div className={`w-[100%] aspect-[1/1] ${props.view.sideslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
-                <div className={`w-[100%] aspect-[1/1] ${props.view.backslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
-            </section>
+            <div className={`w-[48.6%] aspect-[1/1] ${props.view.mainslide} bg-cover bg-no-repeat bg-[top-center] border border-black`}></div>
         </section>
     )
 }

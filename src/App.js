@@ -5,7 +5,7 @@ import Men from "./Men/men";
 function App() {
   return (
     <div className="w-full">
-      <div className="h-[45px] w-[100%] border-b-[2px]  border-black grid grid-cols-[10%_14%_16%_18%_14%_16%_12%] grid-rows-[45px]">
+      <div className="max-[530px]:hidden h-[45px] w-[100%] border-b-[2px]  border-black grid grid-cols-[10%_14%_16%_18%_14%_16%_12%] grid-rows-[45px]">
         <Link className="pl-[30px] flex items-center border-l-[2px] border-l-black col-[1_/_span_1] row-[1_/span_1] justify-center" to="/">Home</Link>
         <Link className="flex items-center border-l-[2px] border-l-black col-[2_/_span_1] row-[1_/span_1] justify-center"to="/men">Men</Link>
         <Link className="flex items-center border-l-[2px] border-l-black col-[3_/_span_1] row-[1_/span_1] justify-center"to="/">Hack N'Tack</Link>

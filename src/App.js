@@ -1,6 +1,7 @@
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./Home/home";
 import Men from "./Men/men";
+import Cart from "./carts/cart";
 
 function App() {
   return (
@@ -12,11 +13,12 @@ function App() {
         <img className="flex items-center border-l-[2px] border-l-black col-[4_/_span_1] row-[1_/span_1] justify-center" src="" alt="H&T"/>
         <Link className="flex items-center border-l-[2px] border-l-black col-[5_/_span_1] row-[1_/span_1] justify-center"to="/">Women</Link>
         <Link className="flex items-center border-l-[2px] border-l-black col-[6_/_span_1] row-[1_/span_1] justify-center"to="/">Search</Link>
-        <Link className="pr-[50px] flex items-center border-l-[2px] border-l-black col-[7_/_span_1] row-[1_/span_1] justify-center"to="/">Cart</Link>
+        <Link className="pr-[50px] flex items-center border-l-[2px] border-l-black col-[7_/_span_1] row-[1_/span_1] justify-center"to="/cart">Cart</Link>
       </div>
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/men" element={<Men/>}/>
+        <Route path="/cart" element={<Cart/>}/>
       </Routes>
     </div>
   );

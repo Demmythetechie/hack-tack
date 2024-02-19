@@ -10,16 +10,26 @@ function Cart() {
         </div>
         <div className="max-[885px]:w-[2.5%] w-[2.3%] aspect-[1/1] bg-[url('/public/cart.png')] bg-contain bg-no-repeat mt-[5%]"></div>
       </div>
-      <div className="grid grid-cols-[6%_20%_6%_20%_6%_20%_6%_20%_6%] gap-row-[30px] items-center w-[100%] aspect-[1/0.04] pl-[4%] pr-[8%] border-b border-black">
-        <p className="col-[1_/_span_1] max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Item</p>
-        <div className="col-[2_/_span_1] row-[1_/_span_1] border border-black"></div>
-        <p className="col-[3_/_span_1] max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Quantity</p>
+      <div className="grid grid-cols-[6%_18.3%_7%_18.3%_6%_18.3%_6%_18.3%_6%] items-center w-[100%] aspect-[1/0.04] pl-[3%] pr-[8%] border-b border-black">
+        <div className="flex justify-center col-[1_/_span_1] border border-black">
+          <p className="max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Item</p>
+        </div>
+        <div className="col-[2_/_span_1] border border-black"></div>
+        <div className="flex justify-center col-[3_/_span_1] border border-black">
+          <p className="max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Quantity</p>
+        </div>
         <div className="col-[4_/_span_1] border border-black"></div>
-        <p className="col-[5_/_span_1] max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Color</p>
+        <div className="flex justify-center col-[5_/_span_1] border border-black">
+          <p className="max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Color</p>
+        </div>
         <div className="col-[6_/_span_1] border border-black"></div>
-        <p className="col-[7_/_span_1] max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Size</p>
+        <div className="flex justify-center col-[7_/_span_1] border border-black">
+          <p className="max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Size</p>
+        </div>
         <div className="col-[8_/_span_1] border border-black"></div>
-        <p className="col-[9_/_span_1] max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Price</p>
+        <div className="flex justify-start col-[9_/_span_1] border border-black">
+          <p className="max-[885px]:text-[1.5vw] text-[1.2vw] font-medium">Price</p>
+        </div>
       </div>
       <Items />
       <div className="flex flex-col gap-y-[20px] w-[100%] aspect-[1/0.1] border-b border-black items-end justify-center">

@@ -19,6 +19,14 @@ code {
   box-sizing: border-box;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media screen and (max-width: 885px) {
+  .brk {
+    display: grid;
+    grid-template-columns: 8% 17.3% 9% 17.3% 6% 17.3% 6% 17.3% 6%;
+  }
+}

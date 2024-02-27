@@ -139,7 +139,7 @@ function Sec2() {
                     </form>
                 </div>
             </div>
-            <div className="max-[885px]:w-[100%] w-[85.4%] h-fit flex flex-row items flex-wrap gap-x-[48px] gap-y-[48px] justify-center pl-[50px] pr-[50px] pt-[100px] pb-[100px] max-[530px]:pt-[40px] max-[530px]:pb-[40px] max-[460px]:pr-[30px] max-[460px]:pl-[30px] border border-black">
+            <div className="max-[885px]:w-[100%] w-[85.4%] h-fit flex flex-row items flex-wrap gap-x-[48px] gap-y-[48px] justify-center pl-[50px] pr-[50px] pt-[100px] pb-[100px] max-[530px]:pt-[40px] max-[530px]:pb-[40px] max-[460px]:pr-[30px] max-[460px]:pl-[30px]">
                 {menProduct.map((prd, index) => (
                     <>
                         {(index === 0) ? <></> : <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>}

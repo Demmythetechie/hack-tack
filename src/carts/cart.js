@@ -10,21 +10,21 @@ function Cart() {
         </div>
         <div className="max-[885px]:w-[2.5%] w-[2.3%] aspect-[1/1] bg-[url('/public/cart.png')] bg-contain bg-no-repeat mt-[5%]"></div>
       </div>
-      <div className="max-[530px]:hidden brk grid grid-cols-[6%_18.3%_7%_18.3%_6%_18.3%_6%_18.3%_6%] items-center w-[100%] aspect-[1/0.04] pl-[2.5%] pr-[9.5%] border-b border-black">
-        <div className="flex justify-center col-[1_/_span_1]">
-          <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] text-[1.2vw] font-medium">Item</p>
+      <div className="max-[530px]:hidden flex flex-row justify-between items-center w-[100%] aspect-[1/0.04] pl-[2.5%] pr-[4.8%] border-b border-black">
+        <div className="flex justify-center items-center w-[6%] aspect-[1/0.07]">
+          <p className="text-[100%] font-medium">Item</p>
         </div>
-        <div className="flex justify-center col-[3_/_span_1]">
-          <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] text-[1.2vw] font-medium">Quantity</p>
+        <div className="flex justify-center items-center w-[8%] aspect-[1/0.07]">
+          <p className="text-[90%] font-medium">Quantity</p>
         </div>
-        <div className="flex justify-center col-[5_/_span_1]">
-          <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] text-[1.2vw] font-medium">Color</p>
+        <div className="flex justify-center items-center w-[8%] aspect-[1/0.07]">
+          <p className="text-[90%] font-medium">Color</p>
         </div>
-        <div className="flex justify-center col-[7_/_span_1]">
-          <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] text-[1.2vw] font-medium">Size</p>
+        <div className="flex justify-center items-center w-[8%] aspect-[1/0.07]">
+          <p className="text-[90%] font-medium">Size</p>
         </div>
-        <div className="flex justify-center col-[9_/_span_1]">
-          <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] text-[1.2vw] font-medium">Price</p>
+        <div className="flex justify-center items-center w-[8%] aspect-[1/0.07]">
+          <p className="text-[90%] font-medium">Price</p>
         </div>
       </div>
       <Items />
@@ -54,21 +54,21 @@ function Items() {
   return (
     <>
         {items.map((item)=>(
-            <div className="brk max-[530px]:flex max-[530px]:flex max-[530px]:flex-row max-[530px]:justify-between max-[530px]:aspect-[1/0.23] grid grid-cols-[6%_18.3%_7%_18.3%_6%_18.3%_6%_18.3%_6%] items-center w-[100%] aspect-[1/0.08] max-[885px]:aspect-[1/0.1] pl-[2.5%] pr-[9.5%] border-b border-black">
-                <div className={`max-[530px]:w-[20%] col-[1_/_span_1] ${item.img} aspect-[1/1] bg-contain bg-no-repeat border border-black mr-[-2.8%]`}></div>
-                <div className="max-[530px]:w-[15%] col-[3_/_span_1] flex flex-row justify-between items-center pl-[7px] pr-[7px] border border-black">
-                    <button className="max-[885px]:text-[1.7vw] max-[730px]:text-[1.9vw] max-[630px]:text-[2.1vw] max-[530px]:text-[3vw] text-[1.3vw] font-semibold pb-[3px]">-</button>
-                    <p className="max-[885px]:text-[1.4vw] max-[730px]:text-[1.6vw] max-[630px]:text-[1.8vw] max-[530px]:text-[2.6vw] text-[1.1vw] font-regular">{item.quantity}</p>
-                    <button className="max-[885px]:text-[1.7vw] max-[730px]:text-[1.9vw] max-[630px]:text-[2.1vw] max-[530px]:text-[3vw] text-[1.3vw] font-semibold pb-[3px]">+</button>
+            <div className="flex flex-row justify-between items-center max-[530px]:flex max-[530px]:flex-row max-[530px]:justify-between max-[530px]:aspect-[1/0.23] w-[100%] aspect-[1/0.08] max-[885px]:aspect-[1/0.1] pl-[2.5%] pr-[4.8%] border-b border-black">
+                <div className={`max-[530px]:w-[20%] w-[6%] ${item.img} aspect-[1/1] bg-contain bg-no-repeat border border-black`}></div>
+                <div className="border border-black max-[530px]:w-[15%] max-[1000px]:w-[10%] w-[8%] aspect-[1/0.07] flex flex-row justify-between items-center pl-[7px] pr-[7px] max-[1000px]:pl-[3px] max-[1000px]:pr-[3px]">
+                  <button className="w-[25%] text-[100%] font-semibold pb-[3px]">-</button>
+                  <p className="text-[100%] max-[1000px]:text-[90%] font-regular">{item.quantity}</p>
+                  <button className="w-[25%] text-[100%] font-semibold pb-[3px]">+</button>
                 </div>
-                <div className="max-[530px]:hidden flex justify-center col-[5_/_span_1]">
-                    <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] font-regular text-[1.2vw] ml-[-0.7%]">{item.color}</p>
+                <div className="max-[530px]:hidden flex justify-center w-[8%] aspect-[1/0.07]">
+                    <p className="font-regular text-[90%]">{item.color}</p>
                 </div>
-                <div className="max-[530px]:hidden flex justify-center col-[7_/_span_1]">
-                    <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] font-regular text-[1.2vw]">{item.size}</p>
+                <div className="max-[530px]:hidden flex justify-center w-[8%] aspect-[1/0.07]">
+                    <p className="font-regular text-[90%]">{item.size}</p>
                 </div>
-                <div className="max-[530px]:hidden flex justify-center col-[9_/_span_1]">
-                    <p className="max-[885px]:text-[1.5vw] max-[730px]:text-[1.7vw] max-[630px]:text-[1.9vw] font-regular text-[1.2vw]"><span>$</span>{item.price}</p>
+                <div className="max-[530px]:hidden flex justify-center w-[8%] aspect-[1/0.07]">
+                    <p className="font-regular text-[90%]"><span>$</span>{item.price}</p>
                 </div>
 
                 {/*for 530px */}
@@ -99,7 +99,7 @@ function Items() {
                 </div>
           </div>
         ))}
-    </>
+    </>  
   );
 }
 export default Cart;

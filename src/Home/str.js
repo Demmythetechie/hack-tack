@@ -5,10 +5,9 @@ const new_arrival = [
 ];
 
 const best_selling = [
+    {product: "Wool X Buffer Jacket", price: "$130", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
     {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
-    {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
-    {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
-    {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
+    {product: "Wool X Buffer Jacket", price: "$120", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
     {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
     {product: "Wool X Buffer Jacket", price: "$110", img: process.env.PUBLIC_URL + "sec2-img.jpeg"},
 ];

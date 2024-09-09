@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        clamp: "clamp(1rem, 3vw, 2.5vw)",
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-animate"),
+  ],
 }

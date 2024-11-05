@@ -26,7 +26,7 @@ function Sec1 () {
 function Sec2() {
     return (
         <section className="flex flex-col justify-start items-center w-[100%] aspect-[1/0.9] pt-[3%] pb-[3%] border-t border-black gap-y-[3%] max-[860px]:aspect-[1/1.2] max-[601px]:aspect-[1/3.7] max-[601px]:pb-[3%] max-[601px]:gap-y-[1.8%]">
-            <div className="flex flex-row flex-wrap w-[80%] h-[91%] gap-x-[4%] gap-y-[4%] max-[860px]:w-[92%] max-[601px]:h-[97%] max-[601px]:gap-y-[1.5%] border border-green-600">
+            <div className="flex flex-row flex-wrap w-[80%] h-[91%] gap-x-[4%] gap-y-[4%] max-[860px]:w-[92%] max-[601px]:h-[97%] max-[601px]:gap-y-[1.5%]">
                 {new_arrival.map((arrival) =>(
                     <div className="flex flex-col w-[48%] h-[48%] gap-y-[2%] max-[601px]:w-[100%] max-[601px]:h-[27%]">
                         <div style={{background: `url(${arrival.img})`, backgroundPosition: "top-center", backgroundSize: "contain", backgroundRepeat: "no-repeat"}} className="bg-cover bg-no-repeat bg-center w-[100%] h-[88%] border border-black"></div>
@@ -40,7 +40,7 @@ function Sec2() {
                         </div>
                     </div>
                 ))}
-                <div className="flex flex-col w-[48%] h-[48%] items-start justify-between pt-[8%] max-[601px]:h-[14%] max-[601px]:items-center max-[601px]:w-[100%] border border-black">
+                <div className="flex flex-col w-[48%] h-[48%] items-start justify-between pt-[8%] max-[601px]:h-[14%] max-[601px]:items-center max-[601px]:w-[100%]">
                     <p className="text-[3.6vw] text-left font-[HelveticaNeueRoman] min-[601px]:text-[2vw] sm:text-[1.9vw] min-[860px]:text-[1.5vw] xl:text-[1.2vw] max-[601px]:text-center">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eu mi sed felis hendrerit laoreet. Suspendisse tristique facilisis orci, in laoreet felis vestibulum eget.
                     </p>
@@ -146,7 +146,7 @@ function Sec4() {
                     </div>
                 ))}
             </div>
-            <div className="flex flex-row justify-between w-[80%] h-[10%] items-center max-[860px]:w-[92%]">
+            <div className="flex flex-row justify-between w-[80%] h-[10%] items-center max-[860px]:w-[91%]">
                 <div className="w-[10%] flex flex-row justify-between max-[860px]:w-[14%] max-[601px]:w-[22%]">
                     <div className="w-[44%] aspect-square cursor-pointer" onClick={previous}>
                         <svg className="prev" viewBox="0 0 50 50">
@@ -173,11 +173,11 @@ function Sec4() {
 
 function Sec5() {
     return (
-        <section className="flex flex-col justify-center items-center w-[100%] aspect-[1/0.3] max-[860px]:aspect-[1/0.5] pt-[6%]">
+        <section className="flex flex-col justify-center items-center w-[100%] aspect-[1/0.3] max-[860px]:aspect-[1/0.7] pt-[6%]">
             {collection.map((cl)=>(
                 <div className="w-[100%] h-[30%] px-[4%] flex flex-row items-center border-black border border-t-0 border-r-0 border-l-0 justify-between max-[860px]:px-[4%]">
                     <p className="text-[3.6vw] font-[HelveticaNeueMedium] text-black min-[601px]:text-[2.8vw] sm:text-[2.6vw] min-[860px]:text-[2vw] xl:text-[1.7vw]">{cl.name}</p>
-                    <div className="w-[4%] aspect-square max-[860px]:w-[6.5%]">
+                    <div className="w-[4%] aspect-square max-[860px]:w-[10%]">
                         <svg className={cl.cls} viewBox="0 0 50 50">
                             <line x1="20" y1="25" x2="40" y2="25" stroke="#000" strokeWidth="2.4" strokeLinecap="round"/>
                             <polyline points="30,18 40,25 30,32" stroke="#000" strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
@@ -185,11 +185,11 @@ function Sec5() {
                     </div>
                 </div>
             ))}
-            <div className="flex flex-row justify-between w-[100%] h-[10%] px-[4%] max-[860px]:px-[4%] max-[860px]:h-[15%] items-center">
+            <div className="flex flex-row justify-between w-[100%] h-[10%] px-[4%] max-[860px]:px-[4%] max-[860px]:h-[15%] items-center max-[860px]:justify-center">
                 <div className="flex flex-row gap-x-[20px] items-center">
                     <p className="text-[2.2vw] font-[HelveticaNeueRoman] text-black min-[601px]:text-[2.2vw] sm:text-[2vw] min-[860px]:text-[1.4vw] xl:text-[1.2vw]">©2024 Hack&Tack clothing. All Right Reserved</p>
                 </div>
-                <div className="flex flex-row gap-x-[20px] items-center">
+                <div className="flex flex-row gap-x-[20px] items-center max-[806px]:hidden">
                     <select className="w-[75px] text-[2.2vw] text-black font-[HelveticaNeueRoman] min-[601px]:text-[2.2vw] sm:text-[2vw] min-[860px]:text-[1.4vw] xl:text-[1.2vw]">
                         <option className="">English</option>
                         <option className="">French</option>
@@ -206,7 +206,7 @@ function Sec5() {
 
 function Head(props) {
     return (
-        <div className="flex flex-row justify-between items-center aspect-[1/0.05] w-[80%] max-[860px]:w-[92%] border border-red-500">
+        <div className="flex flex-row justify-between items-center aspect-[1/0.05] w-[80%] max-[860px]:w-[92%]">
             <p className="text-[4.4vw] font-[HelveticaNeueBold] sm:text-[4vw] min-[860px]:text-[3.2vw] xl:text-[2.8vw]">{props.heading}</p>
             <div className="flex flex-row justify-end gap-x-[3%] items-center w-[15%] h-[100%] max-[860px]:w-[19%] max-[601px]:hidden">
                 <p className="text-[2.4vw] font-[HelveticaNeueMedium] sm:text-[2.4vw] min-[860px]:text-[1.8vw] xl:text-[1.5vw]">SEE ALL</p>

@@ -40,6 +40,8 @@ const menProduct = [
     {name: "Wool X Buffer Jacket", price: "$117", Mainslide: "bg-[url('/public/sec2-img.jpeg')]", sideslide: "bg-[url('/public/sec2-img.jpeg')]", backslide: "bg-[url('/public/sec2-img.jpeg')]", color1: ["bg-white", "bg-black", "bg-[#808080]"], size: ["S", "M", "L", "XL", "XXL"]},
     {name: "Wool X Buffer Jacket", price: "$118", Mainslide: "bg-[url('/public/sec2-img.jpeg')]", sideslide: "bg-[url('/public/sec2-img.jpeg')]", backslide: "bg-[url('/public/sec2-img.jpeg')]", color1: ["bg-white", "bg-black", "bg-[#808080]"], size: ["S", "M", "L", "XL", "XXL"]},
     {name: "Wool X Buffer Jacket", price: "$119", Mainslide: "bg-[url('/public/sec2-img.jpeg')]", sideslide: "bg-[url('/public/sec2-img.jpeg')]", backslide: "bg-[url('/public/sec2-img.jpeg')]", color1: ["bg-white", "bg-black", "bg-[#808080]"], size: ["S", "M", "L", "XL", "XXL"]},
+    {name: "Wool X Buffer Jacket", price: "$120", Mainslide: "bg-[url('/public/sec2-img.jpeg')]", sideslide: "bg-[url('/public/sec2-img.jpeg')]", backslide: "bg-[url('/public/sec2-img.jpeg')]", color1: ["bg-white", "bg-black", "bg-[#808080]"], size: ["S", "M", "L", "XL", "XXL"]},
+    
 
 ];
 export {prices, filters, menProduct};

@@ -1,5 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./Home/home";
 import Men from "./Men/men";
 import Cart from "./carts/cart";
@@ -9,9 +9,18 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [idxs, setIdxs] =  useState(0);
 
+  useEffect(()=>{
+    setIdxs(sessionStorage.getItem('myValue'));
+  }, []);
+
   function select(idx){
     setIsOpen(false);
     setIdxs(idx);
+    sessionStorage.setItem('myValue', idx);
+  }
+
+  function back(){
+    setIsOpen(false);
   }
 
   const togglePanel = () => {
@@ -45,7 +54,7 @@ function App() {
         {/* Overlay when panel is open */}
         {isOpen && (
           <div
-            className="fixed inset-0 bg-black opacity-50 z-40"
+            className="fixed inset-0 bg-black/5 backdrop-blur-[1px] z-40"
             onClick={togglePanel}
           ></div>
         )}
@@ -57,7 +66,7 @@ function App() {
         >
           <div className="py-8 px-2 flex flex-col h-[100%] gap-y-5 justify-between">
             <div className="w-[100%]">
-              <div className="w-[50%] aspect-[1/0.2] flex items-end justify-start pb-3">
+              <div className="w-[50%] aspect-[1/0.2] flex items-end justify-start pb-10 pl-[4%] cursor-pointer" onClick={back}>
                 <div className="w-[17%] aspect-square">
                   <svg viewBox="0 0 24 24">
                     <path d="M11 6L5 12L11 18M18 6L12 12L18 18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
@@ -65,13 +74,22 @@ function App() {
                 </div>
                 <h2 className="text-xl font-semibold">Back</h2>
               </div>
-              <Link onClick={() => select(0)} className={`${idxs === 0 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-sm w-[100%] py-4 pl-[7%] font-medium`} to="/">Home</Link>
-              <Link onClick={() => select(1)} className={`${idxs === 1 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-sm w-[100%] py-4 pl-[7%] font-medium`} to="/men">Men</Link>
-              <Link onClick={() => select(2)} className={`${idxs === 2 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-sm w-[100%] py-4 pl-[7%] font-medium`} to="/">H&T</Link>
-              <Link onClick={() => select(3)} className={`${idxs === 3 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-sm w-[100%] py-4 pl-[7%] font-medium`} to="/women">Women</Link>
-              <Link onClick={() => select(4)} className={`${idxs === 4 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-sm w-[100%] py-4 pl-[7%] font-medium`} to="/">SignIn</Link>
+              <Link onClick={() => select(0)} className={`${idxs === 0 ? 'bg-black/30' : idxs === null ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-md [100%] py-4 pl-[7%] font-medium text-xl`} to="/">Home</Link>
+              <Link onClick={() => select(1)} className={`${idxs === 1 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-md w-[100%] py-4 pl-[7%] font-medium text-xl`} to="/men">Men</Link>
+              <Link onClick={() => select(2)} className={`${idxs === 2 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-md w-[100%] py-4 pl-[7%] font-medium text-xl`} to="/">H&T</Link>
+              <Link onClick={() => select(3)} className={`${idxs === 3 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-md w-[100%] py-4 pl-[7%] font-medium text-xl`} to="/women">Women</Link>
             </div>
-            <div className="w-[100%] h-[40%] border border-black"></div>
+            <div className="w-[100%] h-[40%] flex flex-col justify-end pl-3">
+              <Link to="/" onClick={() => select(4)} className="w-[50%] aspect-[1/0.2] flex items-center gap-x-[10%]">
+                <div className="w-[20%] aspect-square">
+                  <svg viewBox="0 0 512 512">
+                    <path d="M255.988 32C160.473 32 78.934 91.804 46.727 176h34.639c9.396-20.484 22.457-39.35 38.868-55.762C156.497 83.973 204.709 64 255.988 64c51.286 0 99.504 19.973 135.771 56.239C428.027 156.505 448 204.719 448 256c0 51.285-19.973 99.501-56.239 135.765C355.494 428.029 307.275 448 255.988 448c-51.281 0-99.493-19.971-135.755-56.234-16.412-16.412-29.473-35.28-38.871-55.766H46.725c32.206 84.201 113.746 144 209.264 144C379.703 480 480 379.715 480 256c0-123.702-100.297-224-224.012-224z"></path>
+                    <path d="M206.863 323.883l22.627 22.627L320 256l-90.51-90.51-22.628 22.628L258.745 240H32v32h226.745z"></path>
+                  </svg>
+                </div>
+                <h2 className="text-xl font-semibold">Sign In</h2>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -91,8 +91,106 @@ function Sec2() {
         }   
     }
 
+    {/* code for Mobile filter and sort*/}
+    const [isOpen, setIsOpen] = useState(false);
+    const panelRef = useRef(null);
+  
+    const togglePanel = () => setIsOpen(!isOpen);
+  
+    // Close the panel when clicking outside of it
+    const handleClickOutside = (event) => {
+      if (panelRef.current && !panelRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+  
+    useEffect(() => {
+      if (isOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+      } else {
+        document.removeEventListener('mousedown', handleClickOutside);
+      }
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isOpen]);
+
     return (
-        <section className="w-[100%] flex flex-row">
+        <section className="w-[100%] flex max-[885px]:flex-col flex-row">
+            {/* Mobile Filter and sort*/}
+            <div className="w-[100%]">
+                <button
+                    className="fixed bottom-10 right-10 bg-black/70 text-white px-8 py-2 rounded-full shadow-lg text-lg"
+                    onClick={togglePanel}
+                >
+                    Filter
+                </button>
+
+                {/* Filter Panel */}
+                <div
+                    ref={panelRef}
+                    className={`fixed bottom-0 left-0 w-full bg-white shadow-lg p-5 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-y-0' : 'translate-y-full'
+                        }`}
+                >
+                    <h2 className="text-lg font-semibold mb-4">Filter Options</h2>
+
+                    {filters.map((filter, index) => (
+                        <div key={index} className="flex flex-col items-start justify-between w-full md:w-1/2">
+                            <div
+                                className="w-full flex flex-row items-center justify-between gap-x-2 pb-2 cursor-pointer"
+                                onClick={() => toggleDropdown(index)}
+                            >
+                                <p className="font-semibold text-xl">{filter.type}</p>
+                                <div className="flex w-[20%] items-end gap-x-1">
+                                    <p className="text-base font-medium">view</p>
+                                    <div className="w-5 h-5">
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M9 19a1 1 0 0 1-.71-1.71l5.3-5.29-5.3-5.29a1 1 0 0 1 1.42-1.42l6 6a1 1 0 0 1 0 1.41l-6 6A1 1 0 0 1 9 19z" fill="#000000" strokeWidth="1px" stroke="#000" opacity="1" data-original="#000000"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={getDropdownClass(index)}>
+                                <form className="flex flex-row flex-wrap w-full border border-black">
+                                    {filter.options.map((option) => (
+                                        <div key={option.id} className="flex flex-row gap-x-3 items-center pr-5">
+                                            <input type="checkbox" id={option.id} name={option.id} value={option.id} />
+                                            <label className="text-lg font-normal" htmlFor={option.id}>
+                                                {option.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </form>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="flex flex-col items-start justify-center w-full md:w-4/5">
+                        <div className="w-full flex flex-row items-center gap-x-2 pb-2 cursor-pointer" onClick={showhide}>
+                            <p className="font-semibold text-base">Price</p>
+                        </div>
+                        <form className="flex flex-col w-full space-y-2">
+                            <div className="flex w-full justify-between items-center">
+                                <input
+                                    className="text-sm w-2/5 text-center border border-black font-medium py-1"
+                                    type="text"
+                                    name="min"
+                                    placeholder="MIN"
+                                />
+                                <p className="text-base">-</p>
+                                <input
+                                    className="text-sm w-2/5 text-center border border-black font-medium py-1"
+                                    type="text"
+                                    name="max"
+                                    placeholder="MAX"
+                                />
+                            </div>
+                            <input
+                                className="text-black text-sm w-full bg-white border border-black py-2 font-medium"
+                                type="submit"
+                                value="Go"
+                            />
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div className="max-[885px]:hidden w-[20%] flex flex-col items-start border-r border-black pl-[2%] pt-[2%] gap-y-[1%]">
                 <p className="text-[2vw] font-semibold">Filter By</p>
                 {filters.map((filter, index)=>(
@@ -105,16 +203,20 @@ function Sec2() {
                                 </svg>
                             </div>
                         </div>
-                        <div className={getDropdownClass(index)}>
-                            <form className="flex flex-col w-[100%]">
-                                {filter.options.map((option)=>(
-                                    <div className="w-[100%] flex flex-row gap-x-[8%]">
-                                        <input className="" type="checkbox" id={option.id} name={option.id} value={option.id}/>
-                                        <label className="text-[1vw] font-normal" for={option.id}>{option.name}</label>
-                                    </div>
-                                ))}
-                            </form>
-                        </div>
+                        {(index === 0) ?
+                            <div className={getDropdownClass(index)}>
+                                <form className="flex flex-col w-[100%]">
+                                    {filter.options.map((option)=>(
+                                        <div className="w-[100%] flex flex-row gap-x-[8%]">
+                                            <input className="" type="checkbox" id={option.id} name={option.id} value={option.id}/>
+                                            <label className="text-[1vw] font-normal" for={option.id}>{option.name}</label>
+                                        </div>
+                                    ))}
+                                </form>
+                            </div>
+                        :
+                            <></>
+                        }
                     </div>
                 ))}
                 <div className="flex flex-col items-start justify-center w-[80%]">

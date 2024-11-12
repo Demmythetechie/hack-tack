@@ -131,3 +131,33 @@ code {
   from {width: 0%;}
   to {width: 31%;}
 }
+
+/* CSS for customizing the range slider thumb */
+.custom-slider::-webkit-slider-thumb {
+  appearance: none;
+  aspect-ratio: 1/1; /* Height of the thumb */
+  width: 6%;  /* Width of the thumb */
+  background-color: #000; /* Blue color to match the Tailwind 'accent-blue-500' */
+  border-radius: 50%; /* Circular shape */
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider::-moz-range-thumb {
+  aspect-ratio: 1/1; /* Height of the thumb */
+  width: 6%;  /* Width of the thumb */
+  background-color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider::-ms-thumb {
+  aspect-ratio: 1/1; /* Height of the thumb */
+  width: 6%;  /* Width of the thumb */
+  background-color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+

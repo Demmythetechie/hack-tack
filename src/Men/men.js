@@ -1,32 +1,13 @@
-import {filters, prices, menProduct} from "./str";
-import { useEffect, useRef, useState } from "react";
+import {filters, menProduct} from "./str";
+import { useEffect, useRef, useState, useReducer, createContext, useContext } from "react";
+
+const MyContext = createContext(null);
 
 
 function Men(){
     return(
         <section>
-            <Sec1/>
             <Sec2/>
-        </section>
-    )
-}
-
-function Sec1() {
-    return(
-        <section className="w-[100%] flex flex-col justify-center items-center px-[30px] py-[30px] border-b border-black">
-            <div className="w-[90%]">
-                <p className="text-[2rem] font-semibold">119 items</p>
-            </div>
-            <div className="w-[90%] flex flex-row justify-between items-end">
-                <p className="max-[530px]:text-[5vw] text-[3vw] font-bold">For Men</p>
-                <div className="flex flex-row justify-between items-center h-[30px] w-[120px]">
-                    <p className="max-[530px]:hidden text-[1rem] font-semibold">SEE ALL</p>
-                    <svg className="max-[530px]:hidden" width="50" height="50">
-                        <line x1="12" y1="25" x2="40" y2="25" stroke="#000" strokeWidth="2.2" strokeLinecap="round"/>
-                        <polyline points="30,18 40,25 30,32" stroke="#000" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                </div>
-            </div>
         </section>
     )
 }
@@ -34,6 +15,8 @@ function Sec1() {
 function Sec2() {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [mobileView, setMobileView] = useState(null);
+
 
     // Responsiveness from Tablet mode to Desktop and vice-versa
     useEffect(() => {
@@ -96,6 +79,9 @@ function Sec2() {
     const panelRef = useRef(null);
   
     const togglePanel = () => setIsOpen(!isOpen);
+    function cancel () {
+        setIsOpen(false);
+    }
   
     // Close the panel when clicking outside of it
     const handleClickOutside = (event) => {
@@ -113,139 +99,218 @@ function Sec2() {
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isOpen]);
 
+    const [price, setPrice] = useState(0); // Default price value
+
+    const reducer = (state, action) => {
+        if (action.type === 'check') {
+            let prevState = [...state];
+            if (prevState.includes(action.data)) {
+                prevState = prevState.filter(item => item !== action.data);
+                console.log(prevState);
+            } else {
+                prevState.push(action.data);
+            }
+            state = [...prevState];
+        } else {
+            state = [];
+        }
+        setPrice(0);
+        return state;
+    };
+
+    const [checkboxes, dispatch] = useReducer(reducer, []);
+    function handleClick(id) {
+        dispatch({type: 'check', data: id});
+    };
+
+    const [cloth, setCloth] = useState();
+    function clothType(id) {
+        setCloth(id);
+        dispatch({type: 'reset'});
+        setPrice(0);
+    }
+
+    const handlePriceChange = (event) => {
+        setPrice(event.target.value);
+    };
+
+    function reset() {
+        setCloth();
+        dispatch({type: 'reset'});
+        setPrice(0);
+    }
+
+    const [mainCurrent, setMainCurrent] = useState(0);
+
+    function main(index) {
+        setMainCurrent(index);
+    }
+
     return (
-        <section className="w-[100%] flex max-[885px]:flex-col flex-row">
-            {/* Mobile Filter and sort*/}
-            <div className="w-[100%]">
-                <button
-                    className="fixed bottom-10 right-10 bg-black/70 text-white px-8 py-2 rounded-full shadow-lg text-lg"
-                    onClick={togglePanel}
-                >
-                    Filter
-                </button>
+        <>
+            <section className={`${mobileView === null ? 'flex' : 'hidden'} w-[100%] flex-col justify-center items-center px-[30px] py-[30px] border-b border-black`}>
+                <div className="w-[90%]">
+                    <p className="text-[2rem] font-semibold">119 items</p>
+                </div>
+                <div className="w-[90%] flex flex-row justify-between items-end">
+                    <p className="max-[530px]:text-[5vw] text-[3vw] font-bold">For Men</p>
+                    <div className="flex flex-row justify-between items-center h-[30px] w-[120px]">
+                        <p className="max-[530px]:hidden text-[1rem] font-semibold">SEE ALL</p>
+                        <svg className="max-[530px]:hidden" width="50" height="50">
+                            <line x1="12" y1="25" x2="40" y2="25" stroke="#000" strokeWidth="2.2" strokeLinecap="round" />
+                            <polyline points="30,18 40,25 30,32" stroke="#000" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </section>
+            <section className={`${mobileView !== null ? 'hidden' : 'flex'} w-[100%] max-[885px]:flex-col flex-row`}>
+                {/* Mobile Filter and sort*/}
+                <div className="w-[100%] max-[885px]:block hidden">
+                    <button
+                        className="fixed bottom-10 right-10 bg-black/70 text-white px-8 py-2 rounded-full shadow-lg text-lg"
+                        onClick={togglePanel}
+                    >
+                        Filter
+                    </button>
 
-                {/* Filter Panel */}
-                <div
-                    ref={panelRef}
-                    className={`fixed bottom-0 left-0 w-full bg-white shadow-lg p-5 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-y-0' : 'translate-y-full'
-                        }`}
-                >
-                    <h2 className="text-lg font-semibold mb-4">Filter Options</h2>
+                    {/* Filter Panel */}
+                    <div
+                        ref={panelRef}
+                        className={`fixed flex flex-col gap-y-6 bottom-0 left-0 w-full bg-white shadow-2xl p-5 transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-y-0' : 'translate-y-full'
+                            }`}
+                    >
+                        <div className="flex justify-between items-center w-full">
+                            <div onClick={cancel} className="w-7 aspect-[1/1] cursor-pointer">
+                                <svg viewBox="0 0 32 32">
+                                    <path d="m17.414 16 6.293-6.293a1 1 0 0 0-1.414-1.414L16 14.586 9.707 8.293a1 1 0 0 0-1.414 1.414L14.586 16l-6.293 6.293a1 1 0 1 0 1.414 1.414L16 17.414l6.293 6.293a1 1 0 0 0 1.414-1.414z" fill="#000000" opacity="1" data-original="#000000"></path>
+                                </svg>
+                            </div>
+                            <h2 className="text-xl font-semibold">Filter</h2>
+                            <button onClick={reset} className="text-lg font-medium">Reset</button>
+                        </div>
 
-                    {filters.map((filter, index) => (
-                        <div key={index} className="flex flex-col items-start justify-between w-full md:w-1/2">
-                            <div
-                                className="w-full flex flex-row items-center justify-between gap-x-2 pb-2 cursor-pointer"
-                                onClick={() => toggleDropdown(index)}
-                            >
-                                <p className="font-semibold text-xl">{filter.type}</p>
-                                <div className="flex w-[20%] items-end gap-x-1">
-                                    <p className="text-base font-medium">view</p>
-                                    <div className="w-5 h-5">
-                                        <svg viewBox="0 0 24 24">
-                                            <path d="M9 19a1 1 0 0 1-.71-1.71l5.3-5.29-5.3-5.29a1 1 0 0 1 1.42-1.42l6 6a1 1 0 0 1 0 1.41l-6 6A1 1 0 0 1 9 19z" fill="#000000" strokeWidth="1px" stroke="#000" opacity="1" data-original="#000000"></path>
-                                        </svg>
+                        {filters.map((filter, index) => (
+                            <div key={index} className="flex flex-col items-start justify-between gap-y-2 w-full md:w-1/2">
+                                <div
+                                    className="w-full flex flex-row items-center justify-between gap-x-2 pb-2 cursor-pointer"
+                                    onClick={() => toggleDropdown(index)}
+                                >
+                                    <p className="font-normal text-2xl">{filter.type}</p>
+                                    <div className="flex w-[50%] items-center justify-end gap-x-2">
+                                        <p className="text-lg font-normal">view all</p>
+                                        <div className="w-5 aspect-[1/1]">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M9 19a1 1 0 0 1-.71-1.71l5.3-5.29-5.3-5.29a1 1 0 0 1 1.42-1.42l6 6a1 1 0 0 1 0 1.41l-6 6A1 1 0 0 1 9 19z" fill="#000000" strokeWidth="1px" stroke="#000" opacity="1" data-original="#000000"></path>
+                                            </svg>
+                                        </div>
                                     </div>
+                                </div>
+                                <div className={getDropdownClass(index)}>
+                                    <form className="flex flex-row flex-wrap w-full gap-x-2 gap-y-2">
+                                        {filter.options.map((option) => (
+                                            (index === 0) ?
+                                                <div className={`${cloth === option.id ?  'bg-black/50' : ''} flex flex-row gap-x-[8%] px-5 py-[0.2rem] rounded-full border border-black relative cursor-pointer`}>
+                                                    <input onClick={()=> clothType(option.id)} className="absolute top-0 left-0 w-full h-full opacity-0" type="radio" id={option.id} name={option.id} value={option.id}/>
+                                                    <label className="text-lg font-medium" for={option.id}>{option.name}</label>
+                                                </div>
+                                            :
+                                                <div className={`${checkboxes.includes(option.id) ? 'bg-black/50' : ''} flex flex-row gap-x-[8%] px-5 py-[0.2rem] rounded-full border border-black relative cursor-pointer`}>
+                                                    <input onClick={()=> handleClick(option.id)} className="absolute top-0 left-0 w-full h-full opacity-0" type="checkbox" id={option.id} name={option.id} value={option.id}/>
+                                                    <label className="text-lg font-medium" for={option.id}>{option.name}</label>
+                                                </div>
+                                        ))}
+                                    </form>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="flex flex-col items-start justify-center w-full md:w-4/5">
+                            <div className="w-full flex flex-row items-center justify-between gap-x-2 pb-2 cursor-pointer" onClick={showhide}>
+                                <p className="font-normal text-2xl">Price</p>
+                                <p className="text-lg font-normal">${price}</p>
+                            </div>
+                            <form className="flex flex-col w-full gap-y-6 pt-6 pb-2">
+                                <div className="w-full flex items-center">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="2000"
+                                        value={price}
+                                        onChange={handlePriceChange}
+                                        className="custom-slider w-full h-1 rounded-lg appearance-none cursor-pointer accent-black"
+                                        style={{background: `linear-gradient(to right, #000000 0%, #000000 ${(price / 2000) * 100}%, #e5e7eb ${(price / 2000) * 100}%, #e5e7eb 100%)`}}
+                                    />
+                                </div>
+                                <input className="flex justify-center items-center w-[100%] aspect-[1/0.12] font-normal text-lg text-white bg-black" type="submit" id="result" name="result" value="Show (188) results"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="max-[885px]:hidden w-[20%] flex flex-col items-start border-r border-black pl-[2%] pt-[2%] gap-y-[1%]">
+                    <p className="text-[2vw] font-semibold">Filter By</p>
+                    {filters.map((filter, index)=>(
+                        <div className="flex flex-col items-start justify-between w-[50%]">
+                            <div className="w-[100%] flex flex-row items-center gap-x-[6%] pb-[5%]" onClick={() => toggleDropdown(index)}>
+                                <p className="font-semibold text-[1.2vw]">{filter.type}</p>
+                                <div className="w-[9%] aspect-square pt-[2%]">
+                                    <svg viewBox="0 0 14 14">
+                                        <polyline points="2,4 7,10 12,4" stroke="#000" strokeWidth="2" fill="none"/>
+                                    </svg>
                                 </div>
                             </div>
                             <div className={getDropdownClass(index)}>
-                                <form className="flex flex-row flex-wrap w-full border border-black">
-                                    {filter.options.map((option) => (
-                                        <div key={option.id} className="flex flex-row gap-x-3 items-center pr-5">
-                                            <input type="checkbox" id={option.id} name={option.id} value={option.id} />
-                                            <label className="text-lg font-normal" htmlFor={option.id}>
-                                                {option.name}
-                                            </label>
+                                <form className="flex flex-col">
+                                    {filter.options.map((option)=>(
+                                        <div className="flex flex-row">
+                                            <input className="" type="checkbox" id={option.id} name={option.id} value={option.id}/>
+                                            <label className="ml-[5px] text-[1rem] font-normal" for={option.id}>{option.name}</label>
                                         </div>
                                     ))}
                                 </form>
                             </div>
                         </div>
                     ))}
-                    <div className="flex flex-col items-start justify-center w-full md:w-4/5">
-                        <div className="w-full flex flex-row items-center gap-x-2 pb-2 cursor-pointer" onClick={showhide}>
-                            <p className="font-semibold text-base">Price</p>
+                    <div className="flex flex-col items-start justify-center w-[80%]">
+                        <div className="w-[100%] flex flex-row items-center gap-x-[6%] pb-[5%]" onClick={showhide}>
+                            <p className="font-semibold text-[1.2vw]">Price</p>
                         </div>
-                        <form className="flex flex-col w-full space-y-2">
-                            <div className="flex w-full justify-between items-center">
-                                <input
-                                    className="text-sm w-2/5 text-center border border-black font-medium py-1"
-                                    type="text"
-                                    name="min"
-                                    placeholder="MIN"
-                                />
-                                <p className="text-base">-</p>
-                                <input
-                                    className="text-sm w-2/5 text-center border border-black font-medium py-1"
-                                    type="text"
-                                    name="max"
-                                    placeholder="MAX"
-                                />
+                        <form className="flex flex-col w-[100%] aspect-[1/0.35] justify-between">
+                            <div className="flex w-[100%] justify-between items-center">
+                                <input className="text-[0.8vw] w-[40%] aspect-[1/0.4] text-center border border-black font-medium" type="text" name="min" value="MIN"/>
+                                <p className="text-[1vw]">-</p>
+                                <input className="text-[0.8vw] w-[40%] aspect-[1/0.4] text-center border border-black font-medium" type="text" name="max" value="MAX"/>
                             </div>
-                            <input
-                                className="text-black text-sm w-full bg-white border border-black py-2 font-medium"
-                                type="submit"
-                                value="Go"
-                            />
+                            <input className="text-black text-[0.8vw] w-[100%] bg-white border border-black h-[40%] font-medium" type="submit" value="Go"/>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div className="max-[885px]:hidden w-[20%] flex flex-col items-start border-r border-black pl-[2%] pt-[2%] gap-y-[1%]">
-                <p className="text-[2vw] font-semibold">Filter By</p>
-                {filters.map((filter, index)=>(
-                    <div className="flex flex-col items-start justify-between w-[50%]">
-                        <div className="w-[100%] flex flex-row items-center gap-x-[6%] pb-[5%]" onClick={() => toggleDropdown(index)}>
-                            <p className="font-semibold text-[1.2vw]">{filter.type}</p>
-                            <div className="w-[9%] aspect-square pt-[2%]">
-                                <svg viewBox="0 0 14 14">
-                                    <polyline points="2,4 7,10 12,4" stroke="#000" strokeWidth="2" fill="none"/>
-                                </svg>
-                            </div>
-                        </div>
-                        {(index === 0) ?
-                            <div className={getDropdownClass(index)}>
-                                <form className="flex flex-col w-[100%]">
-                                    {filter.options.map((option)=>(
-                                        <div className="w-[100%] flex flex-row gap-x-[8%]">
-                                            <input className="" type="checkbox" id={option.id} name={option.id} value={option.id}/>
-                                            <label className="text-[1vw] font-normal" for={option.id}>{option.name}</label>
-                                        </div>
-                                    ))}
-                                </form>
-                            </div>
-                        :
-                            <></>
-                        }
-                    </div>
-                ))}
-                <div className="flex flex-col items-start justify-center w-[80%]">
-                    <div className="w-[100%] flex flex-row items-center gap-x-[6%] pb-[5%]" onClick={showhide}>
-                        <p className="font-semibold text-[1.2vw]">Price</p>
-                    </div>
-                    <form className="flex flex-col w-[100%] aspect-[1/0.35] justify-between">
-                        <div className="flex w-[100%] justify-between items-center">
-                            <input className="text-[0.8vw] w-[40%] aspect-[1/0.4] text-center border border-black font-medium" type="text" name="min" value="MIN"/>
-                            <p className="text-[1vw]">-</p>
-                            <input className="text-[0.8vw] w-[40%] aspect-[1/0.4] text-center border border-black font-medium" type="text" name="max" value="MAX"/>
-                        </div>
-                        <input className="text-black text-[0.8vw] w-[100%] bg-white border border-black h-[40%] font-medium" type="submit" value="Go"/>
-                    </form>
+                <div className="max-[885px]:w-[100%] w-[80%] h-fit flex flex-row flex-wrap gap-x-[2.75%] gap-y-[4vh] max-[601px]:gap-y-[2.5vh] justify-start px-[2%] border-black max-[601px]:border-[0px] max-[601px]:border-t py-[5%] max-[530px]:py-[10%] max-[601px]:justify-center">
+                    {menProduct.map((prd, index) => (
+                        <>
+                            <MyContext.Provider value={{ setMobileView }}>
+                                <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>
+                            </MyContext.Provider>
+                            {(switchh.current === index) ? <Fullview view={view}/> : <></>}
+                        </>
+                    ))}
                 </div>
-            </div>
-            <div className="max-[885px]:w-[100%] w-[80%] h-fit flex flex-row flex-wrap gap-x-[2.75%] gap-y-[4vh] max-[601px]:gap-y-[2.5vh] justify-start px-[2%] border-black max-[601px]:border-[0px] max-[601px]:border-t py-[5%] max-[530px]:py-[10%] max-[601px]:justify-center">
-                {menProduct.map((prd, index) => (
-                    <>
-                        <Review mainslide={prd.Mainslide} name={prd.name} price={prd.price} on={view} setView={setView} ind={index} sideslide={prd.sideslide} backslide={prd.backslide} color={prd.color1} size={prd.size} switchh={switchh}/>
-                        {(switchh.current === index) ? <Fullview view={view}/> : <></>}
-                    </>
-                ))}
-            </div>
-        </section>
+            </section>
+            <section className={`${mobileView === null ? 'hidden' : 'flex'} w-[100%] flex-col items-center border border-black gap-y-4 py-6`}>
+                <div className="w-[95%] flex flex-row justify-between">
+                    <div className={`w-[74%] aspect-[1/1.2] border border-black bg-cover bg-no-repeat bg-[top-center] ${menProduct[mobileView === null ? 0 : mobileView].Mainslide}`}></div>
+                    <section className="w-[23%] aspect-[1/0.2] flex flex-col justify-between gap-x-2">
+                        <div onClick={()=> main(0)} className={`${mainCurrent === 0 ? 'border-4 border-orange-700' : 'border border-black'} w-[100%] h-[30%] ${menProduct[mobileView === null ? 0 : mobileView].Mainslide} bg-cover bg-no-repeat bg-[top-center] cursor-pointer rounded-lg`}></div>
+                        <div onClick={()=> main(1)} className={`${mainCurrent === 1 ? 'border-4 border-orange-700' : 'border border-black'} w-[100%] h-[30%] ${menProduct[mobileView === null ? 0 : mobileView].sideslide} bg-cover bg-no-repeat bg-[top-center] cursor-pointer rounded-lg`}></div>
+                        <div onClick={()=> main(2)} className={`${mainCurrent === 2 ? 'border-4 border-orange-700' : 'border border-black'} w-[100%] h-[30%] ${menProduct[mobileView === null ? 0 : mobileView].backslide} bg-cover bg-no-repeat bg-[top-center] cursor-pointer rounded-lg`}></div>
+                    </section>
+                </div>
+                <div></div>
+            </section>
+        </>
     )
 }
 
 function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide, color, size, switchh}) {
+    const {setMobileView} = useContext(MyContext);
     function fullview () {
         setView({mainslide, name, price, sideslide, backslide, color, size})
         if (window.innerWidth >= 1256) {
@@ -277,6 +342,8 @@ function Review ({mainslide, name, ind, price, on, setView, sideslide, backslide
             if ((menProduct.length - 1) % 2 === 0 && switchh.current > menProduct.length - 1) {
                 switchh.current = ind;
             }
+        } else {
+            setMobileView(ind);
         }
     }
 

@@ -294,7 +294,7 @@ function Sec2() {
                     ))}
                 </div>
             </section>
-            <section className={`${mobileView === null ? 'hidden' : 'flex'} w-[100%] flex-col items-center border border-black gap-y-4 py-6`}>
+            <section className={`${mobileView === null ? 'hidden' : 'flex'} w-[100%] flex-col items-center gap-y-4 py-6`}>
                 <div className="w-[95%] flex flex-row justify-between">
                     <div className={`w-[74%] aspect-[1/1.2] border border-black bg-cover bg-no-repeat bg-[top-center] ${menProduct[mobileView === null ? 0 : mobileView].Mainslide}`}></div>
                     <section className="w-[23%] aspect-[1/0.2] flex flex-col justify-between gap-x-2">
@@ -303,7 +303,48 @@ function Sec2() {
                         <div onClick={()=> main(2)} className={`${mainCurrent === 2 ? 'border-4 border-orange-700' : 'border border-black'} w-[100%] h-[30%] ${menProduct[mobileView === null ? 0 : mobileView].backslide} bg-cover bg-no-repeat bg-[top-center] cursor-pointer rounded-lg`}></div>
                     </section>
                 </div>
-                <div></div>
+                <div className="w-[95%] justify-center flex flex-col gap-y-[5vw]">
+                    <div className="w-[100%] flex flex-row justify-between items-center">
+                        <p className="font-semibold text-[6vw]">{menProduct[mobileView === null ? 0 : mobileView].name}</p>
+                        <p className="font-semibold text-[5vw]">{menProduct[mobileView === null ? 0 : mobileView].price}</p>
+                    </div>
+                    <form className="flex flex-col w-[100%] aspect-[1/0.5] justify-between">
+                        <div className="w-[100%] flex flex-col gap-y-[5%]">
+                            <label for="color" className="text-[5vw] font-semibold">Color</label>
+                            <div className="w-[100%]">
+                                <svg viewBox="0 0 270 10">
+                                    <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%] h-[15%]">
+                            {menProduct[mobileView === null ? 0 : mobileView].color1.map((color) => (
+                                <input className={`w-[15%] h-[100%] ring-1 ring-black rounded-3xl ${color}`} type="button" id="color" name="color"></input>
+                            ))}
+                        </div>
+                        <div className="w-[100%] flex flex-col gap-y-[5%] mt-[5%]">
+                            <label for="size" className="text-[5vw] font-semibold">Size</label>
+                            <div className="w-[100%]">
+                                <svg viewBox="0 0 270 10">
+                                    <line x1="0" y1="3" x2="270" y2="3" stroke="#000" fill="#000" strokeWidth="1.4" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="flex flex-row gap-x-[10px] gap-y-[10px] w-[95%] h-[15%]">
+                            {menProduct[mobileView === null ? 0 : mobileView].size.map((sizes) => (
+                                <button className={`w-[15%] h-[100%] ring-1 ring-black rounded-3xl flex justify-center items-center`}>{sizes}</button>
+                            ))}
+                        </div>
+                    </form>
+                    <div className="flex flex-row w-[100%] aspect-[1/0.2] justify-between items-end">
+                        <div className="flex flex-row items-center justify-between w-[27%] h-[60%] border border-black pl-[5px] pr-[5px]">
+                            <button className="text-[5vw] font-semibold">-</button>
+                            <p className="text-[5vw]">2</p>
+                            <button className="text-[5vw] font-semibold">+</button>
+                        </div>
+                        <button className="w-[63%] h-[60%] text-white bg-black border border-black text-[4vw]">Add to cart</button>
+                    </div>
+                </div>
             </section>
         </>
     )

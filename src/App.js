@@ -3,10 +3,16 @@ import { useState, useEffect } from "react";
 import Home from "./Home/home";
 import Men from "./Men/men";
 import Cart from "./carts/cart";
+import signIn from "./sign";
+import { useLocation } from 'react-router-dom';
 import Women from "./Women/women";
+import SignUp from "./sign";
+import Checkout from "./checkout";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const [position, UpdatePosition] = useState();
   const [idxs, setIdxs] =  useState(0);
 
   useEffect(()=>{
@@ -29,12 +35,12 @@ function App() {
 
   return (
     <div className="w-full max-[530px]:pt-[16%]">
-      <div className="max-[530px]:hidden w-[100%] aspect-[1/0.09] sm:aspect-[1/0.07] md:aspect-[1/0.05] xl:aspect-[1/0.04] border-b border-black flex flex-row">
+      <div className={`${location.pathname === "/signin" || location.pathname === "/checkout" ? 'hidden' : 'flex'} max-[530px]:hidden w-[100%] aspect-[1/0.09] sm:aspect-[1/0.07] md:aspect-[1/0.05] xl:aspect-[1/0.04] border-b border-black flex-row`}>
         <Link className="flex justify-center items-center border-r border-black w-[15%] font-medium" to="/">Home</Link>
-        <Link className="flex justify-center items-center border-r border-black w-[15%] font-medium" to="/">Men</Link>
+        <Link className="flex justify-center items-center border-r border-black w-[15%] font-medium" to="/men">Men</Link>
         <Link className="flex justify-center items-center border-r border-black w-[40%] font-medium" to="/">H&T</Link>
-        <Link className="flex justify-center items-center border-r border-black w-[15%] font-medium" to="/">Women</Link>
-        <Link className="flex justify-center items-center w-[15%] font-medium" to="/">SignIn</Link>
+        <Link className="flex justify-center items-center border-r border-black w-[15%] font-medium" to="/women">Women</Link>
+        <Link className="flex justify-center items-center w-[15%] font-medium" to="/signin">SignIn</Link>
       </div>
       <div className="max-[530px]:flex bg-white hidden">
         {/* Navigation Button */}
@@ -80,8 +86,8 @@ function App() {
               <Link onClick={() => select(3)} className={`${idxs === 3 ? 'bg-black/30' : 'bg-transparent'} flex justify-start items-center rounded-md w-[100%] py-4 pl-[7%] font-medium text-xl`} to="/women">Women</Link>
             </div>
             <div className="w-[100%] h-[40%] flex flex-col justify-end pl-3">
-              <Link to="/" onClick={() => select(4)} className="w-[50%] aspect-[1/0.2] flex items-center gap-x-[10%]">
-                <div className="w-[20%] aspect-square">
+              <Link to="/signin" onClick={() => select(4)} className={`${idxs === 4 ? 'bg-black/30' : 'bg-transparent'} w-[100%] aspect-[1/0.15] flex items-center gap-x-[4%] py-[3%] px-[2%] rounded-md`}>
+                <div className="w-[10%] aspect-square">
                   <svg viewBox="0 0 512 512">
                     <path d="M255.988 32C160.473 32 78.934 91.804 46.727 176h34.639c9.396-20.484 22.457-39.35 38.868-55.762C156.497 83.973 204.709 64 255.988 64c51.286 0 99.504 19.973 135.771 56.239C428.027 156.505 448 204.719 448 256c0 51.285-19.973 99.501-56.239 135.765C355.494 428.029 307.275 448 255.988 448c-51.281 0-99.493-19.971-135.755-56.234-16.412-16.412-29.473-35.28-38.871-55.766H46.725c32.206 84.201 113.746 144 209.264 144C379.703 480 480 379.715 480 256c0-123.702-100.297-224-224.012-224z"></path>
                     <path d="M206.863 323.883l22.627 22.627L320 256l-90.51-90.51-22.628 22.628L258.745 240H32v32h226.745z"></path>
@@ -98,6 +104,8 @@ function App() {
         <Route path="/men" element={<Men/>}/>
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/women" element={<Women/>}/>
+        <Route path="/signin" element={<SignUp/>}/>
+        <Route path="/checkout" element={<Checkout/>}/>
       </Routes>
     </div>
   );

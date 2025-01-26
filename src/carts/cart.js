@@ -1,4 +1,5 @@
 import items from "./str";
+import { Link } from "react-router-dom";
 
 function Cart() {
   return (
@@ -43,8 +44,8 @@ function Cart() {
         </div>
       </div>
       <div className="max-[640px]:pl-[3%] max-[640px]:pr-[3%] pl-[8%] w-[100%] aspect-[1/0.3] min-[530px]:aspect-[1/0.2] sm:aspect-[1/0.15] md:aspect-[1/0.1] flex flex-row gap-x-[3%] max-[530px]:gap-x-[20px] justify-start items-center">
-        <button className="w-[50%] aspect-[1/0.17] min-[530px]:w-[27%] min-[530px]:aspect-[1/0.2] sm:w-[20%] sm:aspect-[1/0.23] md:w-[15%] md:aspect-[1/0.25] text-[3.2vw] min-[430px]:text-[2.8vw] min-[530px]:text-[2vw] sm:text-[1.6vw] md:text-[1.4vw] xl:text-[1.2vw] border-black border font-semibold shadow-[2.5px_2.5px_0px_1px_rgba(0,0,0,1)]">Continue Shopping</button>
-        <button className="w-[50%] aspect-[1/0.17] min-[530px]:w-[27%] min-[530px]:aspect-[1/0.2] sm:w-[20%] sm:aspect-[1/0.23] md:w-[15%] md:aspect-[1/0.25] text-[3.2vw] min-[430px]:text-[2.8vw] min-[530px]:text-[2vw] sm:text-[1.6vw] md:text-[1.4vw] xl:text-[1.2vw] border-black border font-semibold bg-black text-white shadow-[-2.5px_-2.5px_0px_1px_rgba(0,0,0,1)]">Checkout</button>
+        <Link to="/men" className="flex justify-center items-center w-[50%] aspect-[1/0.17] min-[530px]:w-[27%] min-[530px]:aspect-[1/0.2] sm:w-[20%] sm:aspect-[1/0.23] md:w-[15%] md:aspect-[1/0.25] text-[3.2vw] min-[430px]:text-[2.8vw] min-[530px]:text-[2vw] sm:text-[1.6vw] md:text-[1.4vw] xl:text-[1.2vw] border-black border font-semibold shadow-[2.5px_2.5px_0px_1px_rgba(0,0,0,1)]">Continue Shopping</Link>
+        <Link to='/checkout' className="flex justify-center items-center w-[50%] aspect-[1/0.17] min-[530px]:w-[27%] min-[530px]:aspect-[1/0.2] sm:w-[20%] sm:aspect-[1/0.23] md:w-[15%] md:aspect-[1/0.25] text-[3.2vw] min-[430px]:text-[2.8vw] min-[530px]:text-[2vw] sm:text-[1.6vw] md:text-[1.4vw] xl:text-[1.2vw] border-black border font-semibold bg-black text-white shadow-[-2.5px_-2.5px_0px_1px_rgba(0,0,0,1)]">Checkout</Link>
       </div>
     </div>
   );

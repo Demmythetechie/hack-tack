@@ -10,13 +10,9 @@ Hack&Tack is a fast fashion e-commerce website selling Clothing and dressing acc
   [GitHub](https://github.com/Demmythetechie)
   [LinkedIn](https://www.linkedin.com/in/naheem-okunade-032412265/)
 
-  Omobolanle Shaibu
-  [GitHub](https://github.com/lanle05)
-  [LinkedIn](https://www.linkedin.com/in/omobolanle-shaibu-426a7b200/)
-
   ## Installation
   ```git clone https://github.com/Demmythetechie/hack-tack.git```
   ```npm install```
 
   ## Licensing
-  This project is copyrighted 2024- Naheem and Bolanle; Hack & Tack Team
+  This project is copyrighted 2024- Naheem; Hack & Tack Team

@@ -10,7 +10,7 @@ function SignUp() {
     const [loading, setLoading] = useState(false);
 
     // for login
-    const [exist1, setExist1] = useState(false);
+    const [exist1, setExist1] = useState(true);
     const [loading1, setLoading1] = useState(false);
 
     const [notExist, setNotExist] = useState(false);

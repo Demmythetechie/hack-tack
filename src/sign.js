@@ -74,7 +74,7 @@ function SignUp() {
         .then((response)=>{
             console.log(response.data);
             setLoading1(false);
-            setExist1(response.data)
+            setExist1(response.data);
         })
         .catch((error)=>{
             console.log(error);

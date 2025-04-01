@@ -1,8 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function SignUp() {
+
+    //initializing useNavigate
+    const navigate = useNavigate();
 
     const [signin, updateIn] = useState(false);
     // For SignUp
@@ -10,7 +14,7 @@ function SignUp() {
     const [loading, setLoading] = useState(false);
 
     // for login
-    const [exist1, setExist1] = useState(true);
+    const [exist1, setExist1] = useState(null);
     const [loading1, setLoading1] = useState(false);
 
     const [notExist, setNotExist] = useState(false);
@@ -67,14 +71,20 @@ function SignUp() {
 
         
         await axios.post('https://hack-tack-api.onrender.com/signin', formValues, {
+            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
             },
         })
         .then((response)=>{
+            const data = response.data;
             console.log(response.data);
             setLoading1(false);
-            setExist1(response.data);
+            if (data.doesntExst === false && data.status === true) {
+                navigate('/');
+            } else {
+                setExist1(response.data);
+            }
         })
         .catch((error)=>{
             console.log(error);
@@ -123,7 +133,7 @@ function SignUp() {
                     <form onSubmit={signIn} className={`${signin === true ? 'flex' : 'hidden'} flex flex-col items-center w-[80%] gap-y-[4vw] min-[530px]:gap-y-[2vw]`}>
                         <input className="border-b border-black w-[100%] aspect-[1/0.1] max-[1280px]:h-[70%] placeholder:font-[Montserrat] placeholder:text-sm sm:placeholder:text-sm md:placeholder:sm lg:placeholder:text-sm xl:placeholder:text-sm font-[Montserrat] text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm placeholder:font-normal focus:outline-none focus:border-b focus:border-black placeholder:text-black bg-transparent" type="email" id="email" name="email" placeholder="Email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Input email address correctly" required />
                         <input className="border-b border-black w-[100%] aspect-[1/0.1] max-[1280px]:h-[70%] placeholder:font-[Montserrat] placeholder:text-sm sm:placeholder:text-sm md:placeholder:sm lg:placeholder:text-sm xl:placeholder:text-sm font-[Montserrat] text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm placeholder:font-normal focus:outline-none focus:border-b focus:border-black placeholder:text-black bg-transparent" type="password" id="pswd" name="pswd" placeholder="Enter Password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*\d))(?=(.*[\W_])).{8,}$" title="Must contain atleast 1 uppercase, 1 lowercase, 1 numerical character and 1 symbol. Minimum of 8 character." required />
-                        <p className={`${(exist1 === 'null' ? 'inline-block' ? exist1 === false : 'inline-block' : 'hidden')} font-[ubuntu] font-semibold sm:text-xl md:text-xl lg:text-sm xl:text-sm text-red-500`}>{exist1 === 'null' ? 'No account has been created with this email' : 'Wrong password or email'}</p>
+                        <p className={`${(exist1 === null ? 'hidden' : (exist1.doesntExst === true ? 'inline-block' : exist1.status === false ? 'inline-block' : 'hidden'))} font-[ubuntu] font-semibold sm:text-xl md:text-xl lg:text-sm xl:text-sm text-red-500`}>{exist1 === null ? '' : (exist1.doesntExst === true ? 'No account has been created with this email' : 'Wrong password or email')}</p>
                         <input className={`${(loading1) ? 'hidden' : 'block'} w-[100%] aspect-[1/0.12] max-[1280px]:h-[70%] pl-[3%] font-[ubuntu] text-sm sm:text-sm md:text-sm lg:text-sm xl:text-sm font-semibold focus:outline-none focus:border focus:border-black bg-black text-white`} type="submit" id="done" name="done" value={'Sign In'} />
                         <div className={`${(loading1) ? 'flex' : 'hidden'} w-[100%] aspect-[1/0.12] max-[1280px]:h-[70%] pl-[3%] bg-black items-center justify-center`}>
                             <div className="animate-spin rounded-full w-[5%] aspect-square border-t-2 border-r-2 border-white border-solid"></div>

@@ -19,6 +19,10 @@ function App() {
     setIdxs(sessionStorage.getItem('myValue'));
   }, []);
 
+  useEffect(()=>{
+    
+  }, []);
+
   function select(idx){
     setIsOpen(false);
     setIdxs(idx);

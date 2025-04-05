@@ -71,7 +71,6 @@ function SignUp() {
 
         
         await axios.post('https://hack-tack-api.onrender.com/signin', formValues, {
-            withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -81,7 +80,9 @@ function SignUp() {
             console.log(response.data);
             setLoading1(false);
             if (data.doesntExst === false && data.status === true) {
-                navigate('/');
+                sessionStorage.setItem('token', data.token);
+                console.log(sessionStorage.getItem('token'));
+                window.location.href = '/';
             } else {
                 setExist1(response.data);
             }

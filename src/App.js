@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   useEffect(()=>{
-    
+    console.log(sessionStorage.getItem('token'));
   }, []);
 
   function select(idx){
